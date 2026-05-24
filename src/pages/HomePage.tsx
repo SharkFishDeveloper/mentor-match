@@ -50,7 +50,7 @@ const HomePage = () => {
       }
     );
 
-    setMeetings(resp.data.meetings);
+    setMeetings(resp?.data?.meetings || []);
 
   } catch (error) {
 
@@ -66,11 +66,11 @@ const HomePage = () => {
 
   }, []);
 
-  const upcomingMeetings = meetings.filter(
+  const upcomingMeetings = (meetings || []).filter(
     (meeting) => meeting.status === "upcoming"
   );
 
-  const previousMeetings = meetings.filter(
+  const previousMeetings = (meetings || []).filter(
     (meeting) => meeting.status === "completed"
   );
 
