@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Providers/Socket";
 import axios from "axios";
@@ -22,6 +22,7 @@ interface Review {
 
 
 const MentorCard = () => {
+  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -34,13 +35,34 @@ const MentorCard = () => {
   const [reviewComment, setReviewComment] = useState("");
   const [reviewRating, setReviewRating] = useState<number>(5);
 
-  const [reviews, setReviews] = useState<Review[]>(
-  mentor.reviews || []
-);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const { user, setUser } = useUser();
 
+useEffect(() => {
 
+  const fetchReviews = async () => {
+
+    try {
+
+      const resp = await axios.get(
+        `${BACKEND_URL}/app/mentor/reviews/${mentor.id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setReviews(resp.data.reviews || []);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
+
+  fetchReviews();
+
+}, [mentor.id]);
   // const option = {
   //   username,
   //   money,
@@ -67,41 +89,6 @@ const MentorCard = () => {
     15,16,17,18,19,20,21,
     22,23,24,25,26,27,28,
   ];
-
-  // const handleConnect = async () => {
-  //   if (!money || isNaN(money) || mentor.price !== money) {
-  //     return alert("Please enter correct amount");
-  //   }
-
-  //   if (!selectedTime) {
-  //     return alert("Please select a time slot");
-  //   }
-
-  //   try {
-
-  //     const resp = await axios.put(
-  //       `${BACKEND_URL}/app/user/connect-with-mentor/id=${mentor.id}`,
-  //       option,
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-
-  //     setUser(resp.data.user);
-
-  //     alert(
-  //       `Session booked with ${mentor.username}`
-  //     );
-
-  //     navigate("/");
-
-  //   } catch (error: any) {
-
-  //     console.log(error.message);
-
-  //     alert("Error connecting with mentor");
-  //   }
-  // };
 
   const handleConnect = async () => {
 
