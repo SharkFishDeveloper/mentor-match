@@ -40,7 +40,6 @@ const MentorCard = () => {
 
   const { user, setUser } = useUser();
 
-  const username = user ? user.username : null;
 
   // const option = {
   //   username,
@@ -173,6 +172,7 @@ const MentorCard = () => {
 
     alert("Review added successfully");
 
+    //@
   } catch (error: any) {
 
     console.log(error.message);

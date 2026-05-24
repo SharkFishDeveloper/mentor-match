@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { userState } from '../store/atoms/user';
-import Cookies from 'js-cookie';
+// import { userState } from '../store/atoms/user';
+// import Cookies from 'js-cookie';
 import axios from 'axios';
 import { BACKEND_URL } from '../../utils/backendUrl';
 import { useUser } from '../Providers/Socket';
@@ -31,7 +31,7 @@ const Appbar = () => {
       <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MentorMatch</span>
   </Link>
   <div className="flex md:order-2">
-    {user && user.rating===undefined && (
+    {user && (
       <button onClick={()=>navigate("/search")}><p className="text-white">
       Search mentor</p></button>
     )}
