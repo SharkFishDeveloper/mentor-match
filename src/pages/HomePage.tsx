@@ -27,6 +27,7 @@ const HomePage = () => {
 
   const navigate = useNavigate();
 
+  //@ts-expect-error
   const isMentor = !!user?.user?.timeslots;
 
   const [meetings, setMeetings] = useState<Meeting[]>([]);

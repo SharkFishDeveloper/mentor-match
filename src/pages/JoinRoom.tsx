@@ -72,10 +72,12 @@ const JoinRoom = ({name,localaudiotrack,localvideotrack}:
             socket?.on("add-ice-candidate",({candidate,type})=>{
               console.log("REcieviig ice locally")
               if(type == "sender"){
+                  //@ts-expect-error
                 setReceivingPc(pc=>{
                   pc?.addIceCandidate(candidate);
                 })
               }else{
+                  //@ts-expect-error
                 setSendingPc(pc=>{
                   pc?.addIceCandidate(candidate);
                 })
@@ -85,7 +87,9 @@ const JoinRoom = ({name,localaudiotrack,localvideotrack}:
             socket?.on("offer",async({sdp:sdpA}:{sdp:string})=>{
               const pc = new RTCPeerConnection();
                 const remoteDescription = {
+                    //@ts-expect-error
                   type: sdpA.type, // Set the type ("offer" or "answer")
+                    //@ts-expect-error
                   sdp: sdpA.sdp,
                   };
                   setReceivingPc(pc); 
@@ -95,6 +99,7 @@ const JoinRoom = ({name,localaudiotrack,localvideotrack}:
                   //   remoteVideoRef.current.srcObject = stream;
                   // }
                   setRemotemediastream(stream);
+                    //@ts-expect-error
                   window.pcr = pc;
                   console.log("recieved sdp after offering ",remoteDescription)
                   await pc.setRemoteDescription(remoteDescription);

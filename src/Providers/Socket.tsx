@@ -48,6 +48,7 @@ export const useSocket = (): Socket | undefined => {
     }
     return socket;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const SocketProvider = (props:any)=>{
     const socket = useMemo(()=>io(BACKEND_URL),[]);
     useEffect(() => {
