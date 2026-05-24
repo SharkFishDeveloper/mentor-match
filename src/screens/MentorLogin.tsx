@@ -16,6 +16,7 @@ const MentorLogin = () => {
       const resp = await axios.post(`${BACKEND_URL}/app/mentor/login`, {
         email, password
       }, { withCredentials: true });
+      console.log("resp",resp.data.user)
       setUser(resp.data.user);
       navigate("/");
       return alert(resp.data.message);

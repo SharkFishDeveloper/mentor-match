@@ -24,32 +24,35 @@ interface Meeting {
 
 const HomePage = () => {
   const user = useUser();
-
+  console.log(user.user)
   const navigate = useNavigate();
 
   //@ts-expect-error
   const isMentor = !!user?.user?.timeslots;
-
   const [meetings, setMeetings] = useState<Meeting[]>([]);
 
   const [loading, setLoading] = useState(true);
 
+  console.log("user.user.id",)
+
   useEffect(() => {
 
     const fetchMeetings = async () => {
-  try {
+      console.log("Feting meetings")
+    try {
 
     const endpoint = isMentor
       ? "/app/mentor/meetings"
       : "/app/user/meetings";
 
+
+
     const resp = await axios.get(
-      `${BACKEND_URL}${endpoint}`,
+      `${BACKEND_URL}${endpoint}/${user.user.id}`,
       {
         withCredentials: true,
       }
     );
-
     setMeetings(resp?.data?.meetings || []);
 
   } catch (error) {
@@ -64,7 +67,7 @@ const HomePage = () => {
 
     fetchMeetings();
 
-  }, []);
+}, [user, isMentor]);
 
   const upcomingMeetings = (meetings || []).filter(
     (meeting) => meeting.status === "upcoming"
